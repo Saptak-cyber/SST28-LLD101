@@ -2,7 +2,7 @@
  * Base contract for notification senders.
  * 
  * Preconditions: 
- * - Notification n must not be null
+ * - Notification n may be null
  * - All notification fields may be null or empty (subtypes must handle gracefully)
  * 
  * Postconditions: 
@@ -26,7 +26,7 @@ public abstract class NotificationSender {
      * Sends a notification using the channel-specific mechanism.
      * Must handle all inputs gracefully without throwing exceptions.
      * 
-     * @param n the notification to send (must not be null)
+     * @param n the notification to send (may be null)
      */
     public abstract void send(Notification n);
 }

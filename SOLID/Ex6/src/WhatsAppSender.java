@@ -8,6 +8,11 @@ public class WhatsAppSender extends NotificationSender {
 
     @Override
     public void send(Notification n) {
+        if (n == null) {
+            System.out.println("WA ERROR: notification is missing");
+            audit.add("WA failed");
+            return;
+        }
         // Validation separated from sending logic
         NotificationValidator.ValidationResult result = validator.validateForWhatsApp(n);
         if (!result.isValid) {

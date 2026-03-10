@@ -1,12 +1,16 @@
 public class EmailSender extends NotificationSender {
+    private final NotificationValidator validator;
+
     public EmailSender(AuditLog audit) { 
         super(audit); 
+        this.validator = new NotificationValidator();
     }
 
     @Override
     public void send(Notification n) {
-        if (n.email == null || n.email.isEmpty()) {
-            System.out.println("EMAIL ERROR: recipient email is missing");
+        NotificationValidator.ValidationResult result = validator.validateForEmail(n);
+        if (!result.isValid) {
+            System.out.println("EMAIL ERROR: " + result.errorMessage);
             audit.add("email failed");
             return;
         }

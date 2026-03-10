@@ -1,12 +1,16 @@
 public class SmsSender extends NotificationSender {
+    private final NotificationValidator validator;
+
     public SmsSender(AuditLog audit) { 
         super(audit); 
+        this.validator = new NotificationValidator();
     }
 
     @Override
     public void send(Notification n) {
-        if (n.phone == null || n.phone.isEmpty()) {
-            System.out.println("SMS ERROR: recipient phone is missing");
+        NotificationValidator.ValidationResult result = validator.validateForSms(n);
+        if (!result.isValid) {
+            System.out.println("SMS ERROR: " + result.errorMessage);
             audit.add("sms failed");
             return;
         }
