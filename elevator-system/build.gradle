@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.elevator'
+version = '1.0.0'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClass = 'com.elevator.Main'
+}
+
+tasks.named('run') {
+    standardInput = System.in
+}
